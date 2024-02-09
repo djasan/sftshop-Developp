@@ -1,0 +1,38 @@
+# config/packages/security.yaml
+
+security:
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+        
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            provider: app_user_provider
+            custom_authenticator: App\Security\Authenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+            # Ajoutez vos configurations de pare-feu ici

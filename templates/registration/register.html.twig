@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block title %}Register{% endblock %}
+
+{% block body %}
+
+<h1>Register</h1>
+<div class="container-form">
+    <div class="formulaire">
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.age) }}
+        {{ form_row(registrationForm.adresse) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.password.first) }}
+        {{ form_row(registrationForm.password.second) }}
+        {% if passError is defined %}
+        <div class="alert alert-danger" role="alert">{{ passError }}</div>
+        {% endif %}
+        <div class="form-check">
+            {{ form_row(registrationForm.agreeTerms) }}
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:lts
+    container_name: sftshop_mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: sftshop_phpmyadmin
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+    depends_on:
+      - mariadb
+    ports:
+      - 8005:80
+
+  adminer:
+    image: adminer
+    container_name: sftshop_adminer
+    restart: always
+    ports:
+      - 8006:8080
+
+  mailer: 
+    image: schickling/mailcatcher
+    container_name: sftshop_mailcacther
+    restart: always
+    ports: ["1025:1025", "1080:1080"]
+
+volumes:
+  db_data:

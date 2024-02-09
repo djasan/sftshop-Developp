@@ -1,0 +1,66 @@
+{# templates/base.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TShop{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    {% endblock %}
+    {% block javascripts %}
+    {% endblock %}
+</head>
+<body>
+
+    {# Header #}
+    <header>
+        <div>
+            <a href="{{ path('app_home') }}"><h1>TShop</h1></a>
+        </div>
+        <div>
+            <nav>
+                <ul>
+                    <li><a href="{{ path('app_catalogue') }}">Catalogue</a></li>
+                    {# <li><a href="{{ path('app_compte') }}">Compte</a></li> #}
+                </ul>
+            </nav>
+        </div>
+        {# Partie droite du header #}
+        <div>
+            {% if app.user %}
+                {# Si l'utilisateur est connecté #}
+                <img src="{{ asset('path/to/connected-user-avatar.jpg') }}" alt="Avatar">
+                {# <button><a href="{{ path('app_client') }}">Compte</a></button> #}
+                <button><a href="{{ path('app_logout') }}">Déconnexion</a></button>
+            {% else %}
+                {# Si l'utilisateur n'est pas connecté #}
+                <img src="{{ asset('path/to/generic-avatar.jpg') }}" alt="Avatar">
+                <button><a href="{{ path('app_login') }}">Connexion</a></button>
+                <button><a href="{{ path('app_register') }}">Inscription</a></button>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                {# Si l'utilisateur est un admin #}
+                <button><a href="{{ path('admin') }}">Gestion Catalogue</a></button>
+            {% endif %}
+        </div>
+    </header>
+
+    {# Contenu de la page #}
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    {# Footer #}
+    <footer>
+        <p>TShop &copy; {{ "now"|date("Y") }}</p>
+        <ul>
+            <li><a href="#">Conditions générales de vente</a></li>
+            <li><a href="#">RGPD</a></li>
+        </ul>
+    </footer>
+
+</body>
+</html>
